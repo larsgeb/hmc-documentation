@@ -86,7 +86,110 @@ This means that as soon as the momenta vectors for both the beginning and end of
 \paragraph{Stepsize of the trajectories}\index{Trajectories!Tuning the}\index{Trajectories!Stepsize} The step size is another important tuning parameter. Wasting many computation on many steps is wasteful if the `particle' will end up in the same place, as was done in previous illustrations. According to \cite{neal2011mcmc} the maximum step size is defined by the minimum standard deviation of momentum, or square root of the mass matrix.
 
 \paragraph{Results}
+Using optimized parameters, given in Table~\ref{tab:naive_params}, multiple inversions were performed using \gls{HMC}. The used stepsize is well below the upper limit of stability predicted by the mass matrix, according to \cite{neal2011mcmc}. As can be seen in Figure~\ref{fig:linear_system.accepted}, over many iterations the amount of accepted models evens out to approximately 66\%. I'll call this method `naive' for now, for reasons which will become apparent later.
 
+\begin{table}[]
+\centering
+\begin{tabular}{l|l}
+ Number of timesteps & 50 \\
+ Length of timestep & 0.05 \\
+ Predicted stability &  0.5
+\end{tabular}
+\caption{Inversion parameters for `naive' trajectory settings.}
+\label{tab:naive_params}
+\end{table}
 
+In Figure~\ref{fig:linear_system.histq2} one sees what we'd expect to see with a linear model with Gaussian uncertainties. After more and more iterations the marginal posterior probability density functions approaches a normal distribution. It's actual mean in the last iteration is $\mu_1 = 2.941$, close to the original parameter. This value is reached to within 1\% as soon as 500 iterations. The actual development of the value is given in Figure~\ref{fig:linear_system.evolution_q2}. This all seems like ideal behaviour, our sampler is able to get meaningful statistic from our dataset after only 500 iterations, and after 50,000 iterations we have a very nice looking posterior.
 
+When one however examines not only the marginal posterior of parameter 2, but also the marginal posterior of parameter 1 (Figure~\ref{fig:linear_system.histq1}) and the full two dimensional posterior (Figure~\ref{fig:linear_system.hist2d}) unexpected characteristics are found. It seems that parameter 1 has a bimodal distribution, while none of our input prior information nor forward model suggests such behaviour.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_naive/accepted.pdf}
+	\caption{Acceptance rates of the 'naive' sampling.}
+	\label{fig:linear_system.accepted}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_naive/histogram_p2.pdf}
+	\caption{Histogram for marginal probability density of parameter 2 after `naive' HMC sampling using different amount of
+	samples.}
+	\label{fig:linear_system.histq2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.75\textwidth]{simple-linear-system/figures/2d_naive/means2.pdf}
+	\caption{Evolution of mean of parameter 2 as the number of samples increases during the `naive' sampling.}
+	\label{fig:linear_system.evolution_q2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_naive/histogram_p1.pdf}
+	\caption{Histogram for marginal probability density of parameter 1 after `naive' HMC sampling using different amount of
+	samples.}
+	\label{fig:linear_system.histq1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_naive/histogram_2d.pdf}
+	\caption{Full 2D marginal probability density after `naive' HMC sampling using different amount of
+	samples.}
+	\label{fig:linear_system.hist2d}
+\end{figure}
+
+\afterpage{\clearpage}
+
+Upon closer inspection of the random walk trajectory done after 50,000 iterations (Figure~\ref{fig:linear_system.randomWalk50000naive}), there seems to be some bias in proposing new models. What happened in this case which spefically leads to the bimodal distribution is theorized as follows; the prior information always leads to propose the first model close to $\mathbf{q} = (2,2)^T$. This starting point coupled with the rather long trajectory length of 50 samples and still rather large stepsize, result in every iteration traversing almost the complete model space.
+
+This, in addition with the No U-Turn Criterion, makes these trajectories `resonate', always exploring the same portion of the model space. If a model is launched away from the misfit minimum, it wil return towards its original position and then be killed by the No U-Turn Criterion. If it is launched in a relatively beneficial direction. it will traverse a lot of space and turn at the opposite side of the model space. I would not go as far as to call it \index{Hysteresis}hysteresis, but rather a fundamental result of the \index{Tuning parameters}tuning parameters.
+
+There's two ways to test this hypothesis. First, the random walk using a different prior is analysed. Now the prior means are chosen at exactly the values of the parameters used for the synthetics. The result, given in Figure~\ref{fig:linear_system.improvedmean}, is that sampling is a little bit improved. The sampling is more uniform in the 2D space, but there is still some kind of `orbiting' behaviour, the sampler never reaches the minimum potential. This is because all trajectories passing through this point are not yet terminated. Making trajectories even longer won't work, because the No U-Turn Criterion will terminate them anyway. This leads us to testing another method of avoiding \index{Biased sampling}biased sampling; shorter trajectories.
+
+\index{Trajectories!Trajectory length}I think that this is a better solution. By decreasing total trajectory length, one does not need to tune actual physical intuition or information (the prior) to the needs of the algorithm. Recognizing this behaviour in non-linear or high dimensional systems might prove very challenging upon inspection of marginal probability distributions. One quality check one could do, even during sampling, is to monitor how often the No U-Turn Criterion triggers the termination of a trajectory, relative to total models ran. The promising result is given in Figure~\ref{fig:linear_system.improvedtrajectory}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.66\textwidth]{simple-linear-system/figures/2d_naive/randomWalk_50000.png}
+	\caption{Random walk during 50,000 `naive' \gls{HMC} samples.}
+	\label{fig:linear_system.randomWalk50000naive}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.43\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_improved/mean_histogram_2d}
+		\caption{Full 2D posterior}
+		\label{}
+	\end{subfigure}%
+	\begin{subfigure}{.57\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_improved/mean_randomWalk}
+		\caption{Random walk sequence}
+		\label{}
+	\end{subfigure}
+	\caption{50,000 samples of the same 2D posterior as Figure~\ref{fig:linear_system.hist2d}, tuned with a different starting prior. Note that the random walk still traverse most of the model space in each proposal, leading again to `orbiting' of the minimum.}
+	\label{fig:linear_system.improvedmean}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.43\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_improved/short_histogram_2d}
+		\caption{Full 2D posterior}
+		\label{}
+	\end{subfigure}%
+	\begin{subfigure}{.57\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simple-linear-system/figures/2d_improved/short_randomWalk}
+		\caption{Random walk sequence}
+		\label{}
+	\end{subfigure}
+	\caption{50,000 samples of the same 2D posterior as Figure~\ref{fig:linear_system.hist2d}, tuned with a much smaller trajectory length. Note that now each new model only has a small distance from the previous, but that the model space is much more evenly sampled.}
+	\label{fig:linear_system.improvedtrajectory}
+\end{figure}
