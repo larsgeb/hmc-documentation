@@ -5,7 +5,7 @@
 In probabilistic inversion one does not require regularization, in contrast to deterministic inversion. Instead, one explores the model space by quantifying uncertainties and calculating probabilities for any model. In a sense, this can be considered as the `complete' solution. It is defined using Bayes' Theorem as follows;
 
 \begin{gather}
-	p(\mathbf{q}|\mathbf{d}) = p(\mathbf{d}|\mathbf{q})\;p(\mathbf{q}) / p(\mathbf{d})
+	p(\mathbf{q}|\mathbf{d}) = \frac{p(\mathbf{d}|\mathbf{q})\;p(\mathbf{q})}{ p(\mathbf{d})}
 \end{gather}
 Generally, we ignore the data evidence ($p(\mathbf{d})$) as it only provides scaling of the posterior.
 
@@ -35,6 +35,57 @@ When these prior data functions are combined one obtains the (improperly scaled)
 Exploring this misfit is typically done based on prior information. The Metropolis-Hastings algorithm draws new models entirely from the prior in model space, and accepts either by having a lower misfit or randomly based on the exponential increase in misfit if the proposed model has a larger misfit.
 
 If the prior model is far off or has large uncertainties, classical samplers might have a hard time finding proper acceptable models. An example which will be expanded on in the first section is a linear model where prior data is off by double the forward modeled value, which on 10,000 samples lead to less than 100 accepted models. These acceptance rates are very wasteful of computing power. On the other side, drawing new models is computationally cheap relative to the more intensive \gls{HMC} sampling.
+
+A rather helpful way to write the misfit for a linear forward model with Gaussian uncertainties allows for easy computation of derivatives, as well as keeping notations clean. I start by rewriting the misfit functional as;
+
+\begin{align}
+	\chi(\mathbf{q}) =& \frac{1}{2} \left[ \mathbf{q} -\mathbf{q_0}\right]^T \MatrixVariable{C}_M ^{-1}\left[ \mathbf{q} -  \mathbf{q_0}\right] 
+	+ \frac{1}{2} \left[ \MatrixVariable{G}\mathbf{q} -\mathbf{d_0}\right]^T \MatrixVariable{C}_D ^{-1}\left[\MatrixVariable{G}\mathbf{q} -  \mathbf{d_0}\right]\nonumber\\
+	=&\frac{1}{2} \mathbf{q}^T \MatrixVariable{C}_M ^{-1}\mathbf{q} 
+	- \frac{1}{2} \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1}\mathbf{q} 
+	- \frac{1}{2} \mathbf{q}^T \MatrixVariable{C}_M ^{-1}\mathbf{q_0} 
+	+ \frac{1}{2} \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1}\mathbf{q_0}\nonumber\\
+	&+ \frac{1}{2}\left( \MatrixVariable{G} \mathbf{q} \right)^T \MatrixVariable{C}_D ^{-1}\left( \MatrixVariable{G} \mathbf{q} \right)
+	-\frac{1}{2} \mathbf{d_0} ^T \MatrixVariable{C}_D ^{-1}\left( \MatrixVariable{G} \mathbf{q} \right)\nonumber\\
+	&-\frac{1}{2}\left( \MatrixVariable{G} \mathbf{q} \right)^T \MatrixVariable{C}_D ^{-1}\mathbf{d_0}
+	+\frac{1}{2}\mathbf{d_0}^T \MatrixVariable{C}_D ^{-1}\mathbf{d_0}\nonumber\\
+	=&\frac{1}{2} \mathbf{q}^T \MatrixVariable{C}_M ^{-1}\mathbf{q} 
+	- \frac{1}{2} \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1}\mathbf{q} 
+	- \frac{1}{2} \mathbf{q}^T \MatrixVariable{C}_M ^{-1}\mathbf{q_0} 
+	+ \frac{1}{2} \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1}\mathbf{q_0\nonumber}\\
+	&+ \frac{1}{2}\mathbf{q}^T \MatrixVariable{G}^T  \MatrixVariable{C}_D ^{-1} \MatrixVariable{G} \mathbf{q} 
+	-\frac{1}{2} \mathbf{d_0} ^T \MatrixVariable{C}_D ^{-1} \MatrixVariable{G} \mathbf{q} %\nonumber\\
+	-\frac{1}{2} \mathbf{q}^T  \MatrixVariable{G}^T \MatrixVariable{C}_D ^{-1}\mathbf{d_0}
+	+\frac{1}{2}\mathbf{d_0}^T \MatrixVariable{C}_D ^{-1}\mathbf{d_0}.
+\end{align}
+Now the trick is to realize that all the components can be individually transposed without altering the equation. The fact that $ \mathbf{a}^T \mathbf{b} = \mathbf{a} \cdot \mathbf{b} = \mathbf{b} \cdot \mathbf{a} = \mathbf{b}^T \mathbf{a}$ should be enough proof. Also realizing that  covariance matrices are always symmetric, we rearrange the equation in second, first and zeroth order terms of $\mathbf{q}$:
+\begin{align}
+	\chi(\mathbf{q}) =
+	&\frac{1}{2} \mathbf{q}^T \left[\MatrixVariable{C}_M^{-1} +  \MatrixVariable{G}^T  \MatrixVariable{C}_D ^{-1} \MatrixVariable{G} \right]\mathbf{q} -\left(\mathbf{q_0}^T \MatrixVariable{C}_M ^{-1} + \mathbf{d_0} ^T \MatrixVariable{C}_D ^{-1} \MatrixVariable{G}\right) \mathbf{q}
+	 \nonumber\\
+	& 
+	+ \frac{1}{2} \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1}\mathbf{q_0}
+	+\frac{1}{2}\mathbf{d_0}^T \MatrixVariable{C}_D ^{-1}\mathbf{d_0}.
+\end{align}
+Or, substituting the different components;
+\begin{align}
+	\chi(\mathbf{q}) =
+	&\frac{1}{2}\mathbf{q}^T \MatrixVariable{A} \; \mathbf{q} -\mathbf{b}  \mathbf{q} + c,
+\end{align}
+where
+\begin{align}
+	\MatrixVariable{A} &= \MatrixVariable{C}_M^{-1} +  \MatrixVariable{G}^T  \MatrixVariable{C}_D ^{-1} \MatrixVariable{G} \label{eq:linear_system.misfit_A}\\
+	\mathbf{b} &= \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1} + \mathbf{d_0} ^T \MatrixVariable{C}_D ^{-1} \MatrixVariable{G} \label{eq:linear_system.misfit_b}\\
+	c &=  \frac{1}{2} \mathbf{q_0}^T \MatrixVariable{C}_M ^{-1}\mathbf{q_0}
+	+\frac{1}{2}\mathbf{d_0}^T \MatrixVariable{C}_D ^{-1}\mathbf{d_0}.
+\end{align}
+Note that $\mathbf{b}$ is a row vector, so $\mathbf{b}\mathbf{q}$ is actually the dot product between $\mathbf{b}^T$ and $\mathbf{q}$.
+
+Now using this notation, one can easily compute the gradient of the misfit as
+\begin{gather}
+	\frac{\partial \chi}{\partial q_i} = A_{ij} q_j - b_i.
+\end{gather}
+\index{Algorithm performance}Note that repeated indices are summed. Note that using these quantities (which are precomputed every inversion) sped up propagation by 10 times.
 
 \paragraph{Hamiltonian Mechanics and sampling} One way to propose more acceptable models is to use \gls{HMC} sampling. In this algorithm, the model is considered as a particle in $n$-dimensional space, where n denotes the number of inversion parameters. By not assigning new parameters but momenta in each dimension and propagating the model for a certain amount of time one proposes new models.
 
@@ -77,7 +128,7 @@ I like this better in words. As we explore model space, we assign new momenta in
 \begin{gather}\label{eq:massMatrixForward}
 \MatrixVariable{M} = \MatrixVariable{G}^T \MatrixVariable{G}
 \end{gather}
-where just taking the trace of this matrix would `unlink' the parameters again and make oscillations roughly equal.
+where just taking the trace of this matrix would `unlink' the parameters again and make oscillations roughly equal. We'll see later that this assumption is not fully correct.
 
 \index{Momenta!Drawing} Momenta are drawn from the mass matrix diagonal (correlation is assumed to be non-existent). By using the square root of the mass as standard deviation and zero mean, $n$ momenta are drawn corresponding to $n$ parameters.
 

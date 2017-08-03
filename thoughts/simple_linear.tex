@@ -1,7 +1,7 @@
 % !TeX root = thoughts.tex
 \section{Simple linear systems}
 
-\subsection{2 parameter system}
+\subsection{Introduction with a 2 parameter system}
 In a first analysis a simple linear system is considered, which allows us to get a grip on what is happening behind the scenes. A first analysis will be done on a two dimensional system given by the following linear system;
 \begin{gather}\label{eq:linear_system.system}
 	\begin{pmatrix}
@@ -193,3 +193,73 @@ There's two ways to test this hypothesis. First, the random walk using a differe
 	\caption{50,000 samples of the same 2D posterior as Figure~\ref{fig:linear_system.hist2d}, tuned with a much smaller trajectory length. Note that now each new model only has a small distance from the previous, but that the model space is much more evenly sampled.}
 	\label{fig:linear_system.improvedtrajectory}
 \end{figure}
+
+\subsection{Performance of higher dimensional systems}
+
+In this section I want to look at the influence of dimensionality; how it affects computation time and acceptance rates. A general forward model is presented for $n$-dimensions;
+
+\begin{gather}
+	\MatrixVariable{G} =
+	\begin{bmatrix}
+		1\cdot 1 &   &        & \\
+		  & 2\cdot 2 &        & \\
+		  &   & \ddots & \\
+		  &   &        & n \cdot n
+	\end{bmatrix}
+\end{gather}
+\paragraph{A note on the mass matrix}\index{Mass matrix!revised}The mass matrix was initially again based upon the trace of $\MatrixVariable{G}^T\MatrixVariable{G}$. This \textbf{did not} produce equally oscillating trajectories with models larger than 2 dimension and varying forward models. After some trial and error, and revisiting the theory, an extension upon the mass matrix is made. In the aforementioned reader, the covariance matrices were not analyzed in the general solution. By substituting the `new' $\MatrixVariable{A}$ and $\mathbf{b}$ from equations \eqref{eq:linear_system.misfit_A} and \eqref{eq:linear_system.misfit_b}, we see that a more optimized mass matrix could be constructed from (the trace of) $\MatrixVariable{A}$. This deficit was not apparent in the analysis of the 2 dimensional system probably due to the small difference in forward matrix components and parameters.
+
+\paragraph{Performance increase}\index{Algorithm performance}At this stage I also realized that there are two main points on which we can increase performance. The code at this stage was sped up threefold by compiling using any of the -O\# g++ flags. Any specific compiler flag (-O1 through -O4) didn't noticeably alter performance, mostly invisible due to the random nature of the sampling. I advise therefore to use -O2, the most tested mode, which alters your code the least. Also, RAM usage can be easily decreased by limiting the amount of std::vector$<>$ copies. Every time one of those objects is passed and used only once, (near) perfect forwarding can be achieved using std::move().
+
+
+\paragraph{Inversion characteristics}The step size of any model is fixed at 0.05, since the first dimension provides the upper bound to the stability. For the trajectory, 10 different iterations are done, or whenever the U-Turn criterion is met. In total, 50,000 samples are drawn. Prior information for every parameter is set at 10, with a standard deviation of 5. This means that as the dimensionality increases, the prior becomes worse with respect to the actual parameter. Data covariance is fixed at 10 percent of the observed value, as to negate it's influence on the algorithm as much as possible. 
+
+\paragraph{Results}\index{Algorithm performance!runtime}The computation time versus number of parameters exhibits an almost linear relationship, as seen in Figure~\ref{fig:linear_system.high_dim.time}. The acceptance rate seems to suffer from the increasing dimensions, appearing inversely proportional to the amount of parameters (Figure~\ref{fig:linear_system.high_dim.acceptance}). The results are rather good, but decreasing in quality as the number of accepted models decreases. This performance might be improved by actually drawing correlated samples from the mass matrix (I advise Cholesky decomposition).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{simple-linear-system/figures/higher_dim/performance}
+	\caption{Computation time of 50,000 samples for a varying amount of parameters.}
+	\label{fig:linear_system.high_dim.time}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{simple-linear-system/figures/higher_dim/acceptance_rate}
+	\caption{Acceptance rate of 50,000 samples for a varying amount of parameters.}
+	\label{fig:linear_system.high_dim.acceptance}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
