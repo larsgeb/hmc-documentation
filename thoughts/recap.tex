@@ -100,7 +100,7 @@ In these equations, $q_i$ is the position in dimension $i$, $p_i$ is the momentu
 The trick to \gls{HMC} sampling is to consider the misfit functional $\chi$ as a gravitational potential. This allows us to propagate our model over model space as if it were a particle moving under the influence of gravity defined by the posterior distribution. The actual definitions for potential and kinetic energy then become:
 
 \begin{gather}
-	K(\mathbf{p}) = \frac{1}{2} \sum_{i=1}^{n} \frac{p_i^2}{\mu_i},\\
+	K(\mathbf{p}) = \frac{1}{2} \sum_{i=1}^{n} \frac{p_i^2}{\mu_i},\label{eq:kineticsimple}\\
 	U(\mathbf{q}) = \chi(\mathbf{q}).
 \end{gather}
 

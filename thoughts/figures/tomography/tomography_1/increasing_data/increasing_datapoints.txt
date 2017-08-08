@@ -1,0 +1,42 @@
+3 sources
+5 receievers, 15 datapoints
+Number of accepted models: 108215
+Number of U-Turn terminations in propagation: 0
+Time:       118.324 s
+
+10 receivers, 30 datapoints
+Number of accepted models: 108206
+Number of U-Turn terminations in propagation: 0
+Time: 116.043 s
+
+15 receivers, 45 datapoints
+Number of accepted models: 108005
+Number of U-Turn terminations in propagation: 1
+Time: 116.959 s
+
+30 receivers, 90 datapoints
+Number of accepted models: 106615
+Number of U-Turn terminations in propagation: 0
+Time: 123.445 s
+
+60 receivers, 180 datapoints
+Number of accepted models: 104979
+Number of U-Turn terminations in propagation: 0
+Time: 116.847 s
+
+120 receivers, 360 datapoints
+Number of accepted models: 104157
+Number of U-Turn terminations in propagation: 0
+Time: 118.445 s
+
+9 sources
+120 receivers, 1080 datapoints
+Number of accepted models: 105052
+Number of U-Turn terminations in propagation: 0
+Time: 118.251 s
+
+27 sources
+120 receivers, 3240
+Number of accepted models: 104421
+Number of U-Turn terminations in propagation: 0
+Time: 115.802 s

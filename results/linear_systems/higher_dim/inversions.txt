@@ -1,0 +1,480 @@
+Everything: 0.05 time, 50,000 samples, 10 trajectory points. Percentual data covariance: 5%.
+Parameter i has value i.
+Prior is all at 10, with standard deviation of 5.
+Forward model is correct.
+number of burn in samples 50
+
+4 parameters
+Number of accepted models: 25542
+Number of U-Turn terminations in propagation: 18
+Time: 4.48501 s
+    Mean 1= 0.998369468657
+    Covariance 1= 0.039073889191
+    Mean 2= 2.00167304017
+    Covariance 2= 0.0777019893181
+    Mean 3= 3.00485389691
+    Covariance 3= 0.117054540165
+    Mean 4= 3.99896215676
+    Covariance 4= 0.151487196747
+
+6 parameters
+Number of accepted models: 20672
+Number of U-Turn terminations in propagation: 0
+Time: 5.95428 s
+    Mean 1= 0.999121978567
+    Covariance 1= 0.0390085142906
+    Mean 2= 1.9994475691
+    Covariance 2= 0.0791285961319
+    Mean 3= 3.01013974299
+    Covariance 3= 0.117650061497
+    Mean 4= 4.01628209824
+    Covariance 4= 0.1564027391
+    Mean 5= 5.0140714921
+    Covariance 5= 0.193071133482
+    Mean 6= 6.01574721511
+    Covariance 6= 0.236010027599
+
+8 parameters
+Number of accepted models: 17095
+Number of U-Turn terminations in propagation: 0
+Time: 6.54415 s
+    Mean 1= 1.00071466313
+    Covariance 1= 0.0396379107579
+    Mean 2= 2.00437243238
+    Covariance 2= 0.078317987948
+    Mean 3= 3.01560598416
+    Covariance 3= 0.119691307123
+    Mean 4= 4.01359460252
+    Covariance 4= 0.157235928004
+    Mean 5= 5.01771061602
+    Covariance 5= 0.19951430042
+    Mean 6= 6.00557388032
+    Covariance 6= 0.235691964337
+    Mean 7= 7.02069280903
+    Covariance 7= 0.283526740015
+    Mean 8= 8.01397626401
+    Covariance 8= 0.315705533157
+
+12 parameters
+Number of accepted models: 11444
+Number of U-Turn terminations in propagation: 0
+Time: 9.79743 s
+    Mean 1= 1.00266936133
+    Covariance 1= 0.0399500203124
+    Mean 2= 2.00161413463
+    Covariance 2= 0.0807440344239
+    Mean 3= 3.00650026768
+    Covariance 3= 0.119846213067
+    Mean 4= 4.00713688169
+    Covariance 4= 0.164120368537
+    Mean 5= 5.00860596805
+    Covariance 5= 0.201696806765
+    Mean 6= 6.00695785501
+    Covariance 6= 0.242074246096
+    Mean 7= 7.00504688784
+    Covariance 7= 0.274779064014
+    Mean 8= 8.0052372819
+    Covariance 8= 0.30603207755
+    Mean 9= 8.99868208706
+    Covariance 9= 0.353143795011
+    Mean 10= 10.0209353449
+    Covariance 10= 0.400273812443
+    Mean 11= 11.0067129173
+    Covariance 11= 0.423993057957
+    Mean 12= 11.9711492979
+    Covariance 12= 0.470687011892
+
+16 parameters
+Number of accepted models: 8102
+Number of U-Turn terminations in propagation: 0
+Time: 13.5715 s
+    Mean 1= 1.0012052962
+    Covariance 1= 0.0394324225565
+    Mean 2= 2.00340929334
+    Covariance 2= 0.0775180098614
+    Mean 3= 3.00417674491
+    Covariance 3= 0.122113506654
+    Mean 4= 4.00856682812
+    Covariance 4= 0.151014674108
+    Mean 5= 5.0217612233
+    Covariance 5= 0.196624195076
+    Mean 6= 6.01415165425
+    Covariance 6= 0.234230036022
+    Mean 7= 7.02203139468
+    Covariance 7= 0.26549482269
+    Mean 8= 8.01605541605
+    Covariance 8= 0.308263774495
+    Mean 9= 9.0057412382
+    Covariance 9= 0.341503635263
+    Mean 10= 9.99610440015
+    Covariance 10= 0.39832041663
+    Mean 11= 10.9714283768
+    Covariance 11= 0.444898894695
+    Mean 12= 11.9874569175
+    Covariance 12= 0.482762191908
+    Mean 13= 12.9492603825
+    Covariance 13= 0.502661383215
+    Mean 14= 13.9453364754
+    Covariance 14= 0.555675374077
+    Mean 15= 14.8456546945
+    Covariance 15= 0.568060241929
+    Mean 16= 15.8571262295
+    Covariance 16= 0.637285419899
+
+24 parameters
+Number of accepted models: 4059
+Number of U-Turn terminations in propagation: 0
+Time: 19.4229 s
+    Mean 1= 1.00150880369
+    Covariance 1= 0.0398348212048
+    Mean 2= 2.00047313794
+    Covariance 2= 0.0753918594026
+    Mean 3= 3.01176018458
+    Covariance 3= 0.113238810703
+    Mean 4= 4.00149208531
+    Covariance 4= 0.157118538579
+    Mean 5= 5.00550957346
+    Covariance 5= 0.200114945518
+    Mean 6= 6.00860451983
+    Covariance 6= 0.219147467539
+    Mean 7= 7.02801792218
+    Covariance 7= 0.269657292637
+    Mean 8= 8.0371370242
+    Covariance 8= 0.313570240981
+    Mean 9= 9.01495352457
+    Covariance 9= 0.354694068862
+    Mean 10= 9.96071912696
+    Covariance 10= 0.38774376814
+    Mean 11= 11.0218965303
+    Covariance 11= 0.428920180558
+    Mean 12= 11.9231052632
+    Covariance 12= 0.49515177636
+    Mean 13= 12.9675204789
+    Covariance 13= 0.51779405724
+    Mean 14= 13.8774786979
+    Covariance 14= 0.556096598602
+    Mean 15= 14.9483864555
+    Covariance 15= 0.597375779785
+    Mean 16= 15.8279706411
+    Covariance 16= 0.63757783992
+    Mean 17= 16.8411139436
+    Covariance 17= 0.686873463883
+    Mean 18= 17.7107655525
+    Covariance 18= 0.681478086661
+    Mean 19= 18.6249144176
+    Covariance 19= 0.719749388544
+    Mean 20= 19.5935233475
+    Covariance 20= 0.780717820903
+    Mean 21= 20.4646421801
+    Covariance 21= 0.781520693404
+    Mean 22= 21.4782264405
+    Covariance 22= 0.856920532858
+    Mean 23= 22.3578450736
+    Covariance 23= 0.848484866226
+    Mean 24= 23.1807575954
+    Covariance 24= 0.949724271605
+
+30 parameters
+Number of accepted models: 2468
+Number of U-Turn terminations in propagation: 0
+Time: 25.4179 s
+    Mean 1= 1.00096726055
+    Covariance 1= 0.0395545225855
+    Mean 2= 2.00245925558
+    Covariance 2= 0.0778109897637
+    Mean 3= 3.00617582299
+    Covariance 3= 0.120593680909
+    Mean 4= 4.00144677006
+    Covariance 4= 0.155619840984
+    Mean 5= 5.01385631514
+    Covariance 5= 0.186985821116
+    Mean 6= 6.01396295285
+    Covariance 6= 0.251698512106
+    Mean 7= 7.00493255583
+    Covariance 7= 0.284601527164
+    Mean 8= 7.97265107113
+    Covariance 8= 0.307293397605
+    Mean 9= 9.03527833333
+    Covariance 9= 0.350495654347
+    Mean 10= 9.99581653019
+    Covariance 10= 0.388322009874
+    Mean 11= 10.9915824731
+    Covariance 11= 0.448529330073
+    Mean 12= 11.9009091398
+    Covariance 12= 0.460517991912
+    Mean 13= 12.9110579404
+    Covariance 13= 0.496488370133
+    Mean 14= 13.93475
+    Covariance 14= 0.555827271118
+    Mean 15= 14.9474308519
+    Covariance 15= 0.558962561216
+    Mean 16= 15.8181122415
+    Covariance 16= 0.576264895794
+    Mean 17= 16.7855083127
+    Covariance 17= 0.647268910908
+    Mean 18= 17.8705568238
+    Covariance 18= 0.667376331042
+    Mean 19= 18.8022654673
+    Covariance 19= 0.718837105132
+    Mean 20= 19.5852038048
+    Covariance 20= 0.767590999858
+    Mean 21= 20.45646311
+    Covariance 21= 0.812232359151
+    Mean 22= 21.4648571547
+    Covariance 22= 0.918956215353
+    Mean 23= 22.3704216708
+    Covariance 23= 0.904288071311
+    Mean 24= 23.3067789495
+    Covariance 24= 0.961972333917
+    Mean 25= 23.9943132341
+    Covariance 25= 0.925412174974
+    Mean 26= 24.8218583127
+    Covariance 26= 1.01850941932
+    Mean 27= 25.8422166253
+    Covariance 27= 0.973884337701
+    Mean 28= 26.5766371381
+    Covariance 28= 1.10758772262
+    Mean 29= 27.6598369727
+    Covariance 29= 1.09472900877
+    Mean 30= 28.3832009926
+    Covariance 30= 1.13521273395
+
+45 parameters
+Number of accepted models: 996
+Number of U-Turn terminations in propagation: 0
+Time: 37.5877 s
+    Mean 1= 1.00689932347
+    Covariance 1= 0.0399752749177
+    Mean 2= 2.00828973573
+    Covariance 2= 0.0785158456832
+    Mean 3= 2.99914546512
+    Covariance 3= 0.1111423968
+    Mean 4= 3.99371261099
+    Covariance 4= 0.170720069885
+    Mean 5= 4.96381172304
+    Covariance 5= 0.198784869977
+    Mean 6= 5.97685477801
+    Covariance 6= 0.222630846002
+    Mean 7= 6.95797815011
+    Covariance 7= 0.267203474702
+    Mean 8= 8.00466285412
+    Covariance 8= 0.280468875045
+    Mean 9= 9.00417002114
+    Covariance 9= 0.360273710141
+    Mean 10= 9.99697249471
+    Covariance 10= 0.40546446245
+    Mean 11= 11.0236205391
+    Covariance 11= 0.444487353339
+    Mean 12= 12.0011146934
+    Covariance 12= 0.495678122706
+    Mean 13= 12.9209876321
+    Covariance 13= 0.482850315373
+    Mean 14= 14.0292386892
+    Covariance 14= 0.516885284485
+    Mean 15= 14.7228705074
+    Covariance 15= 0.566221125704
+    Mean 16= 15.7778618393
+    Covariance 16= 0.653186635815
+    Mean 17= 16.6707115222
+    Covariance 17= 0.690750374869
+    Mean 18= 17.8449972516
+    Covariance 18= 0.701894296016
+    Mean 19= 18.6158567653
+    Covariance 19= 0.710314591782
+    Mean 20= 19.5832445032
+    Covariance 20= 0.76567218945
+    Mean 21= 20.4080857294
+    Covariance 21= 0.763900967099
+    Mean 22= 21.2550736786
+    Covariance 22= 0.866500479615
+    Mean 23= 22.4824535941
+    Covariance 23= 0.92040377273
+    Mean 24= 23.3800081395
+    Covariance 24= 0.893699504548
+    Mean 25= 24.1308289641
+    Covariance 25= 0.975875955767
+    Mean 26= 24.9228718816
+    Covariance 26= 1.03785410454
+    Mean 27= 25.9694785412
+    Covariance 27= 1.05697479171
+    Mean 28= 26.7870023256
+    Covariance 28= 0.979379264637
+    Mean 29= 27.5248551797
+    Covariance 29= 1.23075680021
+    Mean 30= 28.4103450317
+    Covariance 30= 1.10645956548
+    Mean 31= 28.8792791755
+    Covariance 31= 0.952783295887
+    Mean 32= 29.8583571882
+    Covariance 32= 1.0459625189
+    Mean 33= 30.8495979915
+    Covariance 33= 1.19159686676
+    Mean 34= 31.560448203
+    Covariance 34= 1.35278303073
+    Mean 35= 32.1083231501
+    Covariance 35= 1.31122040456
+    Mean 36= 32.9981483087
+    Covariance 36= 1.33701766471
+    Mean 37= 33.7750212474
+    Covariance 37= 1.24398954797
+    Mean 38= 34.5235350951
+    Covariance 38= 1.38486820553
+    Mean 39= 35.4020818182
+    Covariance 39= 1.41760963401
+    Mean 40= 35.8045650106
+    Covariance 40= 1.40840107985
+    Mean 41= 36.5022973573
+    Covariance 41= 1.50648464466
+    Mean 42= 37.6156408034
+    Covariance 42= 1.43547500483
+    Mean 43= 37.9399636364
+    Covariance 43= 1.56690098217
+    Mean 44= 38.3593889006
+    Covariance 44= 1.70520689001
+    Mean 45= 39.2149895349
+    Covariance 45= 1.71686541312
+
+70 parameters
+Number of accepted models: 133
+Number of U-Turn terminations in propagation: 0
+Time: 62.3415 s
+    Mean 1= 1.01458857831
+    Covariance 1= 0.0199075382898
+    Mean 2= 2.02023759036
+    Covariance 2= 0.038394466571
+    Mean 3= 3.03909614458
+    Covariance 3= 0.0682887337631
+    Mean 4= 4.12126566265
+    Covariance 4= 0.0828730433277
+    Mean 5= 4.90917120482
+    Covariance 5= 0.082221235102
+    Mean 6= 5.91273048193
+    Covariance 6= 0.159796142112
+    Mean 7= 6.82635891566
+    Covariance 7= 0.183587499403
+    Mean 8= 8.00419349398
+    Covariance 8= 0.128238203414
+    Mean 9= 8.96116120482
+    Covariance 9= 0.156914521208
+    Mean 10= 10.0253279518
+    Covariance 10= 0.229578580379
+    Mean 11= 10.9408156627
+    Covariance 11= 0.333590626881
+    Mean 12= 11.6143783133
+    Covariance 12= 0.218068956744
+    Mean 13= 12.8717120482
+    Covariance 13= 0.310956434649
+    Mean 14= 14.0086253012
+    Covariance 14= 0.408036035111
+    Mean 15= 14.9016012048
+    Covariance 15= 0.507896259387
+    Mean 16= 15.8065373494
+    Covariance 16= 0.241390688581
+    Mean 17= 16.9720385542
+    Covariance 17= 0.326267030578
+    Mean 18= 17.5409686747
+    Covariance 18= 0.293931537897
+    Mean 19= 18.7211289157
+    Covariance 19= 0.344677706246
+    Mean 20= 19.3182915663
+    Covariance 20= 0.340595724123
+    Mean 21= 20.2223289157
+    Covariance 21= 0.366986002845
+    Mean 22= 21.2480674699
+    Covariance 22= 0.681577674661
+    Mean 23= 22.358773494
+    Covariance 23= 0.478268080706
+    Mean 24= 23.0242216867
+    Covariance 24= 0.76332186051
+    Mean 25= 24.3391891566
+    Covariance 25= 0.632286880055
+    Mean 26= 24.4464975904
+    Covariance 26= 0.54356129835
+    Mean 27= 25.3606614458
+    Covariance 27= 0.634128353166
+    Mean 28= 26.4147891566
+    Covariance 28= 0.560791826757
+    Mean 29= 27.9640722892
+    Covariance 29= 0.562231400722
+    Mean 30= 27.5456253012
+    Covariance 30= 0.367703497207
+    Mean 31= 28.6054325301
+    Covariance 31= 0.534703957404
+    Mean 32= 30.8012180723
+    Covariance 32= 0.832180872983
+    Mean 33= 30.9388012048
+    Covariance 33= 0.965370616317
+    Mean 34= 31.3082096386
+    Covariance 34= 0.761261556526
+    Mean 35= 31.639053012
+    Covariance 35= 0.466639615785
+    Mean 36= 33.1971698795
+    Covariance 36= 1.37247485192
+    Mean 37= 34.1094313253
+    Covariance 37= 0.623232758347
+    Mean 38= 34.016446988
+    Covariance 38= 1.09824131288
+    Mean 39= 35.406139759
+    Covariance 39= 0.905971693883
+    Mean 40= 35.0411096386
+    Covariance 40= 0.583002728857
+    Mean 41= 37.4084180723
+    Covariance 41= 1.08264524657
+    Mean 42= 36.9084445783
+    Covariance 42= 0.801132121863
+    Mean 43= 38.4874987952
+    Covariance 43= 1.29756730222
+    Mean 44= 38.209613253
+    Covariance 44= 1.43052679993
+    Mean 45= 38.906953012
+    Covariance 45= 0.871148904966
+    Mean 46= 40.4283493976
+    Covariance 46= 1.08399346823
+    Mean 47= 40.5456963855
+    Covariance 47= 1.01107092001
+    Mean 48= 41.1794180723
+    Covariance 48= 0.649062490949
+    Mean 49= 41.9395843373
+    Covariance 49= 0.61817366128
+    Mean 50= 41.1828650602
+    Covariance 50= 0.889466456482
+    Mean 51= 41.8127927711
+    Covariance 51= 0.680561732841
+    Mean 52= 42.3855240964
+    Covariance 52= 0.578929420113
+    Mean 53= 44.3249192771
+    Covariance 53= 0.936077238573
+    Mean 54= 44.3114554217
+    Covariance 54= 0.818342334302
+    Mean 55= 44.3045144578
+    Covariance 55= 0.795246214342
+    Mean 56= 43.9031493976
+    Covariance 56= 1.34319142112
+    Mean 57= 43.4718108434
+    Covariance 57= 1.04234812391
+    Mean 58= 47.9401915663
+    Covariance 58= 1.26848249038
+    Mean 59= 45.2668626506
+    Covariance 59= 1.67094228053
+    Mean 60= 47.1789819277
+    Covariance 60= 1.1063948696
+    Mean 61= 47.2584698795
+    Covariance 61= 0.806852209374
+    Mean 62= 47.6017915663
+    Covariance 62= 0.853163013128
+    Mean 63= 47.6451433735
+    Covariance 63= 1.73810038522
+    Mean 64= 48.9284951807
+    Covariance 64= 0.976339778967
+    Mean 65= 48.052826506
+    Covariance 65= 1.57734987893
+    Mean 66= 48.4269337349
+    Covariance 66= 1.14020741056
+    Mean 67= 50.1466060241
+    Covariance 67= 1.63686799212
+    Mean 68= 49.0008457831
+    Covariance 68= 1.08517837278
+    Mean 69= 50.0962975904
+    Covariance 69= 1.42213274589
+    Mean 70= 49.6054879518
+    Covariance 70= 1.10740867007

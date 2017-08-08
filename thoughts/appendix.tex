@@ -1,0 +1,54 @@
+% !TeX root = thoughts.tex
+\begin{appendices}
+\section{\label{APP:affinenormal}Affine transformations of normal distributions}
+Proving the relationship's of the means and covariances between affine transformations is easily done from the definition of linear transformations and covariances.
+
+For the means $\overline{\mathbf{x}}$ and $\overline{\mathbf{y}}$ of respectively the normal distributions $\mathbf{X}$ and $\mathbf{Y}$ we use the definition of the transformation of $\mathbf{X}$ to $\mathbf{Y}$. $E\left\{ a \right\}$ is the expected value of $a$.
+
+\begin{align}
+	\overline{\mathbf{y}} &= E\left\{ \mathbf{y} \right\}\nonumber\\
+	&=E\left\{ \mathbf{L}\mathbf{x} + \bm{c} \right\}\nonumber\\
+	&=\mathbf{L}E\left\{ \mathbf{x}  \right\}+ \bm{c}\nonumber\\
+	&=\mathbf{L}	\overline{\mathbf{x}}+ \bm{c}\\
+	\square \span \nonumber
+\end{align}
+
+For the covariances we use it's definition:
+
+\begin{align}
+	\mathbf{\Sigma}_\mathbf{y} 
+	&\triangleq 
+	E\left\{ 
+		\left( \mathbf{y} -  \overline{\mathbf{y}} \right) 
+		\left( \mathbf{y} -  \overline{\mathbf{y}} \right)^T
+	\right\} \nonumber \\
+	&= 
+	E\left\{ 
+	\left( \mathbf{L}\mathbf{x} + \bm{c} -   \mathbf{L}\overline{\mathbf{x}} + \bm{c} \right) 
+	\left( \mathbf{L}\mathbf{x} + \bm{c} -   \mathbf{L}\overline{\mathbf{x}} + \bm{c} \right)^T
+	\right\}  \nonumber \\
+	&= 
+	E\left\{ 
+	\left( \mathbf{L}\mathbf{x} -   \mathbf{L}\overline{\mathbf{x}} \right) 
+	\left( \mathbf{L}\mathbf{x} -   \mathbf{L}\overline{\mathbf{x}} \right)^T
+	\right\} \nonumber \\
+	&= 
+	E\left\{ 
+	\mathbf{L}(\mathbf{x} - \overline{\mathbf{x}})  
+	(\mathbf{x} - \overline{\mathbf{x}} )^T \mathbf{L}^T
+	\right\} \nonumber \\
+	&= 
+	\mathbf{L}\;
+	E\left\{ 
+	(\mathbf{x} - \overline{\mathbf{x}})  
+	(\mathbf{x} - \overline{\mathbf{x}} )^T 
+	\right\} 
+	\mathbf{L}^T \nonumber \\
+	&= 
+	\mathbf{L}\;
+	\mathbf{\Sigma}_\mathbf{x} 
+	\mathbf{L}^T\\
+	\square \span \nonumber 
+\end{align}
+
+\end{appendices}

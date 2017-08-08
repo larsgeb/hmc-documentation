@@ -16,7 +16,9 @@
 \usepackage{caption}
 \usepackage{afterpage}
 \usepackage{subcaption}
+\usepackage{amsmath,amsfonts,amsthm,bm,amssymb}
 \usepackage[hidelinks]{hyperref}
+\usepackage[titletoc,title]{appendix}
 
 \usepackage{natbib}
 \bibliographystyle{abbrvnat}
@@ -67,8 +69,13 @@ The notation used might be a bit of a mix between \cite{neal2011mcmc} and Andrea
 \input{tomography.tex}
 \clearpage
 
-\bibliography{sources.bib}
+\bibliography{sources}
 \printglossary
 \printindex
+
+\appendix
+\clearpage
+\input{appendix.tex}
+
 
 \end{document}

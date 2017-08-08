@@ -1,0 +1,173 @@
+% !TeX root = thoughts.tex
+\section{\label{SEC:tom}Linear tomography}
+
+In this section the \gls{HMC} sampler is applied to a linear two dimensional tomography problem. These kind of problems might be high dimensional, and I will eveluate two different sizes of models with varying velocity models. With the aid of model and data resolution matrices we are able to link the quality of the inversions to the actual models and measurement configurations.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/tomography/tomography_1/model_3by7_3s_5r}
+		\caption{Parameters of model}
+		\label{fig:linear_tomography.model1.parameters}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/tomography/tomography_1/model_3by7_3s_5r_rays}
+		\caption{Ray coverage of model}
+		\label{fig:linear_tomography.model1.rays}
+	\end{subfigure}
+	\caption{Linear tomography model used in the first part of Section~\ref{SEC:tom}, with 21 dimensions. The ray coverage is variable per cell, and can be better analysed in Figure~\ref{fig:linear_tomography.resolution1}}
+	\label{fig:linear_tomography.model1}
+\end{figure}
+
+\subsection{Straight ray tomography and a first model}
+\index{Straight ray solver}In this part, extensive use is made of the MATLAB package written by Naiara Korta Martiartu and Christian B\"ohm (Computational Seismology Group (CSE), ETH Z\"urich). I will leave out the details of this algorithm, as it is perfectly explained in the accompanying manual. The important bit is that the algorithm produces the linear system matrix and synthetic data.
+
+Straight ray tomography is especially suited to test \gls{HMC} for it's forward model is completely linear, and it usually encompasses some interesting correlated parameters and mixed-determined systems. 
+
+We'll start by looking at a relatively simple model of 21 dimensions. The region of interest is composed out of 7x3 blocks of 5 meters wide, as depicted in Figure~\ref{fig:linear_tomography.model1.parameters}. In this region, 3 sources and 5 receivers are present, set up as in Figure~\ref{fig:linear_tomography.model1.rays}. This results in $3 \cdot 5 = 15$ data points. The resulting forward matrix $\MatrixVariable{G}$ is therefore of size 15x21. Each block in the model has rays passing through it in a different way, and may be differently resolved then the next block.
+
+\index{Resolution matrix}\textbf{Note, I actually started on this thinking these were resolution matrices, but I read Hansruedi's script wrong. Still, my analysis stands and I wonder what these matrices actually represent.} To visualize this, we employ the parameter (again, not really the) resolution matrix, for equal data covariance given by $\MatrixVariable{G}^T\MatrixVariable{G}$ (which, interestingly enough, is equal to the original proposal of the mass matrix in \gls{HMC}). In this matrix, the diagonal elements define how well resolved each parameter is relatively, while the rows (as well as the columns, the matrix is symmetric) define averaging kernels.
+
+As seen in Figure~\ref{fig:linear_tomography.model1.parameter_resolution}, some parameters are properly resolved, while others are not. Well resolved parameters have higher indices (note that the matrix is normalized, so we can't say anything about absolutely quality). Some parameters also have high off-diagonal elements, which indicates correlation between parameters. This means that if one of these parameters is high, it influences our perception of the other parameter.
+
+Figure~\ref{fig:linear_tomography.model1.data_resolution} shows the data resolution matrix, given by $\MatrixVariable{G}\,\MatrixVariable{R}\,\MatrixVariable{G}^T$ for equal data covariance. This matrix helps us identify which data is relatively important in the resolution of parameters, i.e. which have a large impact on the inversion. For example, data points 7 through 9 have the highest data importance; they relate the  parameter well to the observed value.
+
+The actual resolution matrices for linear systems are identity matrices, providing not so much insight.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/tomography/tomography_1/model_resolution}
+		\caption{\index{Resolution matrix!Parameter}Parameter resolution matrix}
+		\label{fig:linear_tomography.model1.parameter_resolution}
+	\end{subfigure}\;
+	\begin{subfigure}{.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/tomography/tomography_1/data_resolution}
+		\caption{\index{Resolution matrix!Data}Data resolution matrix}
+		\label{fig:linear_tomography.model1.data_resolution}
+	\end{subfigure}
+	\caption{Normalized `half' resolution matrices for the model depicted in Figure~\ref{fig:linear_tomography.model1}.}
+	\label{fig:linear_tomography.resolution1}
+\end{figure}
+
+\paragraph{Velocity model and inversions}
+The velocity model used for the synthetic data is a simple homogeneous model with acoustic speed constant at $20000 m/s$. Inversion characteristics are given in Table~\ref{tab:inversion.tom1}. The parameter which is inverted for is slowness, and the prior means is taking as 1.0/1500.0, with a standard deviation of 0.00025 seconds per meter. A consequence of the system being underdetermined is that less resolved parameters will diverge from the real model in the sense that some will tend towards the prior information, which changes correlated parameters to higher values. The means after inversion are given in Figure~\ref{fig:linear_tomography.model1.means} and show this characteristic quite strongly.
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{r l}
+		Number of Samples & 1,000,000 \\
+		Number of timesteps & 10 \\
+		Length of timestep & 0.1 \\ \hline 
+		Runtime & 118.324 s \\
+		Accepted samples & 108215 \\
+		Number of U-Turns & 0
+	\end{tabular}
+	\caption{Inversion parameters for first tomography inversions.}
+	\label{tab:inversion.tom1}
+\end{table}
+
+\begin{figure}
+	\centering
+	
+	\includegraphics[width=1\textwidth]{figures/tomography/tomography_1/tomographyMeans}
+	
+	\caption{Means after the initial inversion of approximately 100,000 accepted samples. The parameters at the very horizontal ends of the model are relatively low, probably due to the small entries in the pseudo-resolution matrix. These parameters are not influenced by actual data that much and therefor are pulled more towards the prior informations. At the same time, to compensate for relatively low speeds, parameters in other parts are excessively high. The actual speed in most elements (columns 5 through 20) is however close to the actual forward model of 2000 $m/s$.}
+	\label{fig:linear_tomography.model1.means}
+\end{figure}
+
+\begin{figure}
+	\centering
+	
+	\includegraphics[width=0.6\textwidth]{figures/tomography/tomography_1/tomographyCovariance}
+	
+	\caption{Parameter covariance of the approximately 100,000 inversion samples. The band of negative correlation of entries $\sigma_i,j$ and $\sigma_{i,j\pm3}$ or $\sigma_{i\pm3,j}$ is generated by blocks that lie next to each other; as one speed goes up, the next and previous horizontal blocks compensate by lowering their speed. This behaviour is upon close inspection also visible for the $\pm6$ bands. Entries in the same model column also experience a kind of grouping, but with positive correlation. The maximum covariance is $3.6 \cdot 10^{-8}$.}
+	\label{fig:linear_tomography.model1.covariance}
+\end{figure}
+
+\paragraph{Influence of data dimension on performance}
+Before we saw the influence of the amount of parameters on the inversion performance. Another possible detrimental factor might be the amount of data, which also alters some computational requirements. The predicted influence is not so big, as in the model propagation the dimension is not increase. The additional computational cost will be mostly present in evaluating misfits and their gradients, but as these numbers are definitely precomputed the influence might be weak. 
+
+To test this, we change the amount of receivers in the previously used homogeneous model. Specifically, we add 5 receivers centered in the model blocks starting from the column at $x=25$, working our way to the column $x=5$. This will add 15 data points each step, increasing all the way to 90. Other inversion characteristics remain unchanged.
+
+After each data increase, the model parameters will be better retrieved. Only shown is the last covariance matrix, with 3240 data points. It has relatively less large entries with respect to the largest one. Also the maximum covariance ($2.2 \cdot 10^{-9}$) is lower than the original ($3.6 \cdot 10^{-8}$) for the inversion with 15 data points. The actual runtime is almost not influenced by the amount of data points (number of rows of the forward model).
+
+\begin{figure}
+	\centering
+	
+	\includegraphics[width=0.5\textwidth]{figures/tomography/tomography_1/increasing_data/performanceData}
+	
+	\caption{Algorithm runtime for increasing amount of datapoints. There seems to be no impact on the algorithm performance with an increasing amount of datapoints.}
+	\label{fig:linear_tomography.model1.performanceData}
+\end{figure}
+
+\begin{figure}
+	\centering
+	
+	\includegraphics[width=0.6\textwidth]{figures/tomography/tomography_1/increasing_data/tomographyLastCovariance}
+	
+	\caption{Normalized covariance matrix of the last inversion from Figure~\ref{fig:linear_tomography.model1.performanceData} with 3240 datapoints. Maximum parameter covariance is $2.2 \cdot 10^{-9}$.}
+	\label{fig:linear_tomography.model1.performanceLastCovariance}
+\end{figure}
+%\begin{figure}
+%	\centering
+%	
+%	\includegraphics[width=1\textwidth]{figures/tomography/tomography_2/tomographyModel}
+%	
+%	\caption{Velocity model used for the synthetics of the second tomography inversion. The values of the layer from small to large $y$ are 1800, 1600 and 1400 $m/s$ respectively.}
+%	\label{fig:linear_tomography.model2.velocity}
+%\end{figure}
+
+
+
+\subsection{Generalized momentum}
+At this point I wondered about the influence of implementing the generalized momentum. Implementing this however requires the development of some additional theory. To calculate the generalized momentum we need to invert the mass matrix, which is already an interesting problem. Additionally, we'd like to propose momenta that are correlated according to the mass matrix, so we need to sample from a multivariate correlated Gaussian. I'll start with the second problem, as the result of that simplifies our first problem as we'll see later.
+
+\paragraph{Sampling from an $n$-dimensional Gaussian}
+Up to now, we've proposed new momenta by regarding the diagonal of the mass matrix as the variance of each mass. By taking the square root of the inverse of the diagonal we obtained standard deviations of each mass, and by setting the mean to zero we drew new momenta using the Box-M\"uller transform.
+
+An extension of this mass matrix interpretation is to regard the off diagonal elements as the covariance between parameters. This yields for an $n \times n$ matrix an $n$-dimensional correlated Gaussian. 
+
+\index{Affine transform}First we establish the definition of an affine transformation and it's effect on a normal distribution. The distribution $\mathbf{X} \sim \mathcal{N}_n \left( \bm{\mu}, \bm{\Sigma} \right)$ represent a normal distribution of means $\left[\bm{\mu}\right]_i = \mu_i$ and covariances $\left[ \bm{\Sigma} \right]_{ij} = \sigma_{ij} = \sigma_i \sigma_j \rho_{ij}$ (covariance $\sigma_{ij}$, standard deviation $\sigma_i$ and correlation $\rho_{ij}$). Now, if $\mathbf{Y} = \bm{L} \mathbf{X} + \bm{c}$ is an affine transformation (that is to say, the transform acts linearly on a vector, which it does for matrix-vector multiplication) then the resulting distribution $\mathbf{Y}$ has means $\bm{c} + \bm{L}\bm{\mu}$ and variance $\bm{L} \bm{\Sigma} \bm{L}^T$ (the proof is given in Appendix~\ref{APP:affinenormal}).
+
+If we now sample $\mathbf{X} = \mathcal{N}_n \left( \mathbf{0},\mathbf{I} \right)$ and transform it using $\bm{L}\mathbf{X}$ such that $\bm{L}\bm{I}\bm{L}^T = \bm{L}\bm{L}^T = \bm{\Sigma}$ we have effectively sampled $\mathbf{Y} = \mathcal{N}_n \left( \mathbf{0},\mathbf{\Sigma} \right)$. Changing the means is as easy as adding the mean vector.
+
+\index{Momenta!Drawing}Equipped with this we can now draw from a correlated Gaussian in the following way;
+\begin{itemize}
+	\item Draw $n$ uncorrelated samples with mean $\mu_i$ = 0 and standard deviation $\sigma_i$ = 1;
+	\item Multiple this samples vector with a matrix $M$ ($n \times n$) which transforms $\mathbf{I}$ to $\mathbf{\Sigma}$ during the affine transform;
+	\item Add the wanted mean.
+\end{itemize}
+
+\index{Cholesky decomposition}The second step, finding an appropriate matrix, is the most complicated part of the process. Luckily, covariances are always non-negative and symmetric, meaning that the covariance matrix is positive definite Hermitian matrix. These types of matrices are representable by a Cholesky decomposition. This decomposition produces a lower triangular matrix $\mathbf{L}$ from a positive definite Hermitian matrix $\mathbf{A}$ with the property:
+
+\begin{align}
+	\mathbf{A} = \mathbf{L} \mathbf{L}^\dagger.
+\end{align}
+Here, $\mathbf{L}^\dagger$ stands for the conjugate transpose of $\mathbf{L}$. For the real matrices we are working with, this simplifies to transposition only. Finding the appropriate affine transform is now reduced to finding the appropriate Cholesky decomposition of $\mathbf{\Sigma}$. To achieve this, the Cholesky-Banachiewicz algorithm is implemented.
+
+\paragraph{Evaluating the generalized momentum}
+\index{Momenta!Generalized}
+The generalized kinetic energy, extended from Equation~\ref{eq:kineticsimple} according to \cite{neal2011mcmc}, is given as
+
+\begin{gather}
+	K(\mathbf{p}) = \frac{1}{2} \mathbf{p}^T \mathbf{M}^{-1} \mathbf{p}.
+\end{gather}
+\index{Mass matrix!inverse}
+The difficulty in evaluating this expression is in calculating the matrix inverse of the mass matrix, which for large systems would result in quite some processing time. But since one already has acquired the Cholesky decomposition we can easily show that:
+\begin{gather}
+	\mathbf{A} ^{-1} = \left( \mathbf{L} \mathbf{L}^T \right)^{-1} = \left(\mathbf{L}^T\right)^{-1} \left( \mathbf{L} \right) ^{-1}.
+\end{gather}
+Now, we're still left with a matrix inverse, but inverting a lower triangular matrix is easily done by forward and back substitution algorithms
+\footnote{https://en.wikipedia.org/wiki/Triangular\_matrix\#Forward\_and\_back\_substitution}
+, obtaining every element of a column row by row when inverting $\mathbf{L} \mathbf{L}^{-1} = \mathbf{I}$.
+
+
+
+
+
+
