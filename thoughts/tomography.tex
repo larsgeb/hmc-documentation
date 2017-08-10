@@ -122,8 +122,6 @@ After each data increase, the model parameters will be better retrieved. Only sh
 %	\label{fig:linear_tomography.model2.velocity}
 %\end{figure}
 
-
-
 \subsection{Generalized momentum}
 At this point I wondered about the influence of implementing the generalized momentum. Implementing this however requires the development of some additional theory. To calculate the generalized momentum we need to invert the mass matrix, which is already an interesting problem. Additionally, we'd like to propose momenta that are correlated according to the mass matrix, so we need to sample from a multivariate correlated Gaussian. I'll start with the second problem, as the result of that simplifies our first problem as we'll see later.
 
@@ -143,7 +141,7 @@ If we now sample $\mathbf{X} = \mathcal{N}_n \left( \mathbf{0},\mathbf{I} \right
 	\item Add the wanted mean.
 \end{itemize}
 
-\index{Cholesky decomposition}The second step, finding an appropriate matrix, is the most complicated part of the process. Luckily, covariances are always non-negative and symmetric, meaning that the covariance matrix is positive definite Hermitian matrix. These types of matrices are representable by a Cholesky decomposition. This decomposition produces a lower triangular matrix $\mathbf{L}$ from a positive definite Hermitian matrix $\mathbf{A}$ with the property:
+\index{Cholesky decomposition}The second step, finding an appropriate matrix, is the most complicated part of the process. Luckily, we have proven already that our mass matrix is positive definite. These types of matrices, given that they are self adjoint/Hermitian, are representable by a Cholesky decomposition. The Hermitian property is easily validated; covariances are symmetric and real. The Cholesky decomposition produces a lower triangular matrix $\mathbf{L}$ from a positive definite Hermitian matrix $\mathbf{A}$ with the property:
 
 \begin{align}
 	\mathbf{A} = \mathbf{L} \mathbf{L}^\dagger.
@@ -164,7 +162,7 @@ The difficulty in evaluating this expression is in calculating the matrix invers
 \end{gather}
 Now, we're still left with a matrix inverse, but inverting a lower triangular matrix is easily done by forward and back substitution algorithms
 \footnote{https://en.wikipedia.org/wiki/Triangular\_matrix\#Forward\_and\_back\_substitution}
-, obtaining every element of a column row by row when inverting $\mathbf{L} \mathbf{L}^{-1} = \mathbf{I}$.
+, obtaining every element of a column row by row when inverting $\mathbf{L} \mathbf{L}^{-1} = \mathbf{I}$. Following that we simply use $({\mathbf{L}^T})^{-1} =({\mathbf{L}^{-1}})^{T} $ and multiply the two inverse matrices to obtain $\mathbf{A}^{-1}$.
 
 
 
